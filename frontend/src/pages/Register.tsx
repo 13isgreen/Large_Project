@@ -82,12 +82,12 @@ const Register = () => {
   const canSubmit = !!username && !!email && isPasswordValid;
 
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-white flex items-center justify-center p-4 font-mono">
+    <div className="min-h-screen bg-[#2a2a2a] text-white flex items-center justify-center p-4 font-mono">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-[#2d2d2d] rounded-lg shadow-lg p-8 w-full max-w-md"
+        className="bg-[#3a3a3a] rounded-lg shadow-lg p-8 w-full max-w-md"
       >
         <h2 className="text-3xl font-extrabold text-white text-center mb-6">
           Register
