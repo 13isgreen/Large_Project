@@ -94,22 +94,45 @@ ReactDOM.render(<Resume />, document.getElementById("root"));`
   };
 
   const downloadPdf = async () => {
-    if (!previewRef.current) return;
-    const doc =
-      previewRef.current.contentDocument ||
-      previewRef.current.contentWindow?.document;
+    const iframe = previewRef.current;
+    if (!iframe) return;
+
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
     if (!doc) return;
-    try {
-      await html2pdf().from(doc.documentElement).save("resume.pdf");
-      setDownloadSuccess(true);
-      setTimeout(() => setDownloadSuccess(false), 1500);
-    } catch (err) {
-      console.error(err);
-    }
+
+    const sheet = doc.querySelector(".resume-sheet") as HTMLElement | null;
+    if (!sheet) return;
+
+    /* ----- clone the sheet and its <style> ----- */
+    const clone = sheet.cloneNode(true) as HTMLElement;
+    doc.head
+      .querySelectorAll("style,link[rel='stylesheet']")
+      .forEach((n) => clone.prepend(n.cloneNode(true)));
+
+    /* ----- wrap it in a zero-margin container ----- */
+    const wrapper = document.createElement("div");
+    wrapper.style.margin = "0"; // ← kills the default top gap
+    wrapper.style.padding = "0";
+    wrapper.appendChild(clone);
+
+    clone.style.boxShadow = "none";
+
+    await html2pdf()
+      .set({
+        filename: "resume.pdf",
+        margin: 0,
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      })
+      .from(wrapper)
+      .save();
+
+    setDownloadSuccess(true);
+    setTimeout(() => setDownloadSuccess(false), 1500);
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#1e1e1e] text-white font-mono">
+    <div className="flex flex-col h-screen bg-[#1e1e1e] text-white font-mono overflow-hidden">
       {/* Top bar with Tabs + Save/Download icons */}
       <div className="flex justify-between items-center bg-[#2d2d2d] px-2 text-sm select-none">
         {/* Tabs */}
