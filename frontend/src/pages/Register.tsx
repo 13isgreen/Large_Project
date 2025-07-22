@@ -82,7 +82,7 @@ const Register = () => {
   const canSubmit = !!username && !!email && isPasswordValid;
 
   return (
-    <div className="min-h-screen bg-[#2a2a2a] text-white flex items-center justify-center p-4 font-mono">
+    <div className="min-h-screen bg-[#1E1E1E] text-white flex items-center justify-center p-4 font-mono">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -136,19 +136,19 @@ const Register = () => {
           {/* Live Feedback */}
           <div className="bg-white/10 rounded-lg p-3 mt-2">
             <ul className="text-sm space-y-1 pl-1">
-              <li className={isLengthValid ? "text-green-300" : "text-red-600"}>
+              <li className={isLengthValid ? "text-green-300" : "text-red-400"}>
                 {isLengthValid ? "✓" : "✗"} At least 8 characters
               </li>
-              <li className={hasLowercase ? "text-green-300" : "text-red-600"}>
+              <li className={hasLowercase ? "text-green-300" : "text-red-400"}>
                 {hasLowercase ? "✓" : "✗"} One lowercase letter
               </li>
-              <li className={hasUppercase ? "text-green-300" : "text-red-600"}>
+              <li className={hasUppercase ? "text-green-300" : "text-red-400"}>
                 {hasUppercase ? "✓" : "✗"} One uppercase letter
               </li>
-              <li className={hasDigit ? "text-green-300" : "text-red-600"}>
+              <li className={hasDigit ? "text-green-300" : "text-red-400"}>
                 {hasDigit ? "✓" : "✗"} One number
               </li>
-              <li className={hasSpecial ? "text-green-300" : "text-red-600"}>
+              <li className={hasSpecial ? "text-green-300" : "text-red-400"}>
                 {hasSpecial ? "✓" : "✗"} One special char {"!@#$%^&*()"}
               </li>
             </ul>
